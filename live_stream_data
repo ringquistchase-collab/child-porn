@@ -1,0 +1,586 @@
+{
+  "generated_at": 1787385507.2616086,
+  "person_hash": "e1de8a8c7509bb29f64f",
+  "genome_anchor": "b3ba3ff8ff7d5128443d410f295cdc3b",
+  "total_blocks": 11,
+  "all_events": [
+    {
+      "step": 0,
+      "t_hours": 0.0,
+      "state": {
+        "ctdna_vaf": 0.2177,
+        "hrv_ms": 15.9672,
+        "cortisol": 22.4109,
+        "alpha_power": 7.5145,
+        "pupil_mm": 5.1962,
+        "gsr_us": 9.4686,
+        "methylation": 0.3147,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.2177: early phase \u2014 CRISPR edit begun. Monitor closely.",
+      "status": "early",
+      "diff": 1
+    },
+    {
+      "step": 1,
+      "t_hours": 0.5,
+      "state": {
+        "ctdna_vaf": 0.2152,
+        "hrv_ms": 16.1393,
+        "cortisol": 22.2753,
+        "alpha_power": 7.6013,
+        "pupil_mm": 5.1462,
+        "gsr_us": 9.4685,
+        "methylation": 0.3195,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.2152: early phase \u2014 CRISPR edit begun. Monitor closely.",
+      "status": "early",
+      "diff": 1
+    },
+    {
+      "step": 2,
+      "t_hours": 1.0,
+      "state": {
+        "ctdna_vaf": 0.2121,
+        "hrv_ms": 16.0176,
+        "cortisol": 22.121,
+        "alpha_power": 7.6165,
+        "pupil_mm": 5.1431,
+        "gsr_us": 9.4311,
+        "methylation": 0.3236,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.2121: early phase \u2014 CRISPR edit begun. Monitor closely.",
+      "status": "early",
+      "diff": 1
+    },
+    {
+      "step": 3,
+      "t_hours": 1.5,
+      "state": {
+        "ctdna_vaf": 0.211,
+        "hrv_ms": 16.724,
+        "cortisol": 21.8722,
+        "alpha_power": 7.5265,
+        "pupil_mm": 5.1068,
+        "gsr_us": 9.3732,
+        "methylation": 0.3311,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.2110: early phase \u2014 CRISPR edit begun. Monitor closely.",
+      "status": "early",
+      "diff": 2
+    },
+    {
+      "step": 4,
+      "t_hours": 2.0,
+      "state": {
+        "ctdna_vaf": 0.2086,
+        "hrv_ms": 16.565,
+        "cortisol": 21.3455,
+        "alpha_power": 7.4192,
+        "pupil_mm": 5.0833,
+        "gsr_us": 9.3642,
+        "methylation": 0.3343,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.2086: early phase \u2014 CRISPR edit begun. Monitor closely.",
+      "status": "early",
+      "diff": 2
+    },
+    {
+      "step": 5,
+      "t_hours": 2.5,
+      "state": {
+        "ctdna_vaf": 0.2066,
+        "hrv_ms": 16.9546,
+        "cortisol": 20.7773,
+        "alpha_power": 6.7526,
+        "pupil_mm": 5.0758,
+        "gsr_us": 9.3014,
+        "methylation": 0.3353,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.2066: early phase \u2014 CRISPR edit begun. Monitor closely.",
+      "status": "early",
+      "diff": 2
+    },
+    {
+      "step": 6,
+      "t_hours": 3.0,
+      "state": {
+        "ctdna_vaf": 0.203,
+        "hrv_ms": 17.4655,
+        "cortisol": 21.0551,
+        "alpha_power": 6.9146,
+        "pupil_mm": 5.0322,
+        "gsr_us": 9.1613,
+        "methylation": 0.3407,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.2030: early phase \u2014 CRISPR edit begun. Monitor closely.",
+      "status": "early",
+      "diff": 2
+    },
+    {
+      "step": 7,
+      "t_hours": 3.5,
+      "state": {
+        "ctdna_vaf": 0.1999,
+        "hrv_ms": 17.9326,
+        "cortisol": 20.8556,
+        "alpha_power": 6.6787,
+        "pupil_mm": 4.9979,
+        "gsr_us": 9.0682,
+        "methylation": 0.3485,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1999: early phase \u2014 CRISPR edit begun. Monitor closely.",
+      "status": "early",
+      "diff": 2
+    },
+    {
+      "step": 8,
+      "t_hours": 4.0,
+      "state": {
+        "ctdna_vaf": 0.1971,
+        "hrv_ms": 17.8217,
+        "cortisol": 20.4079,
+        "alpha_power": 6.4981,
+        "pupil_mm": 4.9538,
+        "gsr_us": 8.9714,
+        "methylation": 0.3555,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1971: early phase \u2014 CRISPR edit begun. Monitor closely.",
+      "status": "early",
+      "diff": 2
+    },
+    {
+      "step": 9,
+      "t_hours": 4.5,
+      "state": {
+        "ctdna_vaf": 0.1935,
+        "hrv_ms": 18.498,
+        "cortisol": 20.0144,
+        "alpha_power": 6.3938,
+        "pupil_mm": 4.951,
+        "gsr_us": 8.8234,
+        "methylation": 0.3596,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1935: early phase \u2014 CRISPR edit begun. Monitor closely.",
+      "status": "early",
+      "diff": 2
+    },
+    {
+      "step": 10,
+      "t_hours": 5.0,
+      "state": {
+        "ctdna_vaf": 0.1882,
+        "hrv_ms": 19.0305,
+        "cortisol": 19.8194,
+        "alpha_power": 6.6951,
+        "pupil_mm": 4.9146,
+        "gsr_us": 8.7436,
+        "methylation": 0.3662,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1882: moderate reduction \u2014 edit taking effect. Watch cortisol 19.8.",
+      "status": "responding",
+      "diff": 2
+    },
+    {
+      "step": 11,
+      "t_hours": 5.5,
+      "state": {
+        "ctdna_vaf": 0.1855,
+        "hrv_ms": 19.2643,
+        "cortisol": 19.4554,
+        "alpha_power": 6.6823,
+        "pupil_mm": 4.9074,
+        "gsr_us": 8.6438,
+        "methylation": 0.3741,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1855: moderate reduction \u2014 edit taking effect. Watch cortisol 19.5.",
+      "status": "responding",
+      "diff": 2
+    },
+    {
+      "step": 12,
+      "t_hours": 6.0,
+      "state": {
+        "ctdna_vaf": 0.1815,
+        "hrv_ms": 19.3798,
+        "cortisol": 18.7641,
+        "alpha_power": 6.7765,
+        "pupil_mm": 4.892,
+        "gsr_us": 8.5084,
+        "methylation": 0.3794,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1815: moderate reduction \u2014 edit taking effect. Watch cortisol 18.8.",
+      "status": "responding",
+      "diff": 2
+    },
+    {
+      "step": 13,
+      "t_hours": 6.5,
+      "state": {
+        "ctdna_vaf": 0.1758,
+        "hrv_ms": 19.9811,
+        "cortisol": 18.5186,
+        "alpha_power": 6.2399,
+        "pupil_mm": 4.8816,
+        "gsr_us": 8.4276,
+        "methylation": 0.3825,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1758: moderate reduction \u2014 edit taking effect. Watch cortisol 18.5.",
+      "status": "responding",
+      "diff": 2
+    },
+    {
+      "step": 14,
+      "t_hours": 7.0,
+      "state": {
+        "ctdna_vaf": 0.1715,
+        "hrv_ms": 20.1527,
+        "cortisol": 17.8523,
+        "alpha_power": 6.3354,
+        "pupil_mm": 4.8422,
+        "gsr_us": 8.344,
+        "methylation": 0.3904,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1715: moderate reduction \u2014 edit taking effect. Watch cortisol 17.9.",
+      "status": "responding",
+      "diff": 2
+    },
+    {
+      "step": 15,
+      "t_hours": 7.5,
+      "state": {
+        "ctdna_vaf": 0.1671,
+        "hrv_ms": 20.4354,
+        "cortisol": 18.1492,
+        "alpha_power": 6.387,
+        "pupil_mm": 4.8402,
+        "gsr_us": 8.2273,
+        "methylation": 0.3979,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1671: moderate reduction \u2014 edit taking effect. Watch cortisol 18.1.",
+      "status": "responding",
+      "diff": 2
+    },
+    {
+      "step": 16,
+      "t_hours": 8.0,
+      "state": {
+        "ctdna_vaf": 0.1629,
+        "hrv_ms": 20.434,
+        "cortisol": 18.0088,
+        "alpha_power": 5.905,
+        "pupil_mm": 4.8119,
+        "gsr_us": 8.1801,
+        "methylation": 0.3997,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1629: moderate reduction \u2014 edit taking effect. Watch cortisol 18.0.",
+      "status": "responding",
+      "diff": 2
+    },
+    {
+      "step": 17,
+      "t_hours": 8.5,
+      "state": {
+        "ctdna_vaf": 0.1591,
+        "hrv_ms": 21.028,
+        "cortisol": 18.139,
+        "alpha_power": 6.0389,
+        "pupil_mm": 4.7861,
+        "gsr_us": 8.1123,
+        "methylation": 0.4029,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1591: moderate reduction \u2014 edit taking effect. Watch cortisol 18.1.",
+      "status": "responding",
+      "diff": 2
+    },
+    {
+      "step": 18,
+      "t_hours": 9.0,
+      "state": {
+        "ctdna_vaf": 0.1554,
+        "hrv_ms": 21.065,
+        "cortisol": 17.7234,
+        "alpha_power": 6.3419,
+        "pupil_mm": 4.7668,
+        "gsr_us": 7.9792,
+        "methylation": 0.4046,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1554: moderate reduction \u2014 edit taking effect. Watch cortisol 17.7.",
+      "status": "responding",
+      "diff": 2
+    },
+    {
+      "step": 19,
+      "t_hours": 9.5,
+      "state": {
+        "ctdna_vaf": 0.151,
+        "hrv_ms": 20.8899,
+        "cortisol": 17.6597,
+        "alpha_power": 6.0071,
+        "pupil_mm": 4.7285,
+        "gsr_us": 7.9469,
+        "methylation": 0.4107,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1510: moderate reduction \u2014 edit taking effect. Watch cortisol 17.7.",
+      "status": "responding",
+      "diff": 2
+    },
+    {
+      "step": 20,
+      "t_hours": 10.0,
+      "state": {
+        "ctdna_vaf": 0.1497,
+        "hrv_ms": 21.6528,
+        "cortisol": 17.2135,
+        "alpha_power": 5.929,
+        "pupil_mm": 4.6802,
+        "gsr_us": 7.9022,
+        "methylation": 0.4183,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1497: strong reduction \u2014 CRISPR correction progressing. HRV 21.7ms improving.",
+      "status": "improving",
+      "diff": 2
+    },
+    {
+      "step": 21,
+      "t_hours": 10.5,
+      "state": {
+        "ctdna_vaf": 0.1473,
+        "hrv_ms": 21.6893,
+        "cortisol": 17.1242,
+        "alpha_power": 6.0918,
+        "pupil_mm": 4.6433,
+        "gsr_us": 7.8943,
+        "methylation": 0.4263,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1473: strong reduction \u2014 CRISPR correction progressing. HRV 21.7ms improving.",
+      "status": "improving",
+      "diff": 2
+    },
+    {
+      "step": 22,
+      "t_hours": 11.0,
+      "state": {
+        "ctdna_vaf": 0.1432,
+        "hrv_ms": 21.8197,
+        "cortisol": 16.9453,
+        "alpha_power": 5.8911,
+        "pupil_mm": 4.6213,
+        "gsr_us": 7.8005,
+        "methylation": 0.4331,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1432: strong reduction \u2014 CRISPR correction progressing. HRV 21.8ms improving.",
+      "status": "improving",
+      "diff": 2
+    },
+    {
+      "step": 23,
+      "t_hours": 11.5,
+      "state": {
+        "ctdna_vaf": 0.1382,
+        "hrv_ms": 22.5526,
+        "cortisol": 16.3887,
+        "alpha_power": 5.7208,
+        "pupil_mm": 4.5941,
+        "gsr_us": 7.696,
+        "methylation": 0.4359,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1382: strong reduction \u2014 CRISPR correction progressing. HRV 22.6ms improving.",
+      "status": "improving",
+      "diff": 2
+    },
+    {
+      "step": 24,
+      "t_hours": 12.0,
+      "state": {
+        "ctdna_vaf": 0.1356,
+        "hrv_ms": 23.1386,
+        "cortisol": 16.0349,
+        "alpha_power": 5.4382,
+        "pupil_mm": 4.5465,
+        "gsr_us": 7.6812,
+        "methylation": 0.4403,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1356: strong reduction \u2014 CRISPR correction progressing. HRV 23.1ms improving.",
+      "status": "improving",
+      "diff": 2
+    },
+    {
+      "step": 25,
+      "t_hours": 12.5,
+      "state": {
+        "ctdna_vaf": 0.1337,
+        "hrv_ms": 23.0169,
+        "cortisol": 16.121,
+        "alpha_power": 5.4116,
+        "pupil_mm": 4.5106,
+        "gsr_us": 7.5978,
+        "methylation": 0.4452,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1337: strong reduction \u2014 CRISPR correction progressing. HRV 23.0ms improving.",
+      "status": "improving",
+      "diff": 2
+    },
+    {
+      "step": 26,
+      "t_hours": 13.0,
+      "state": {
+        "ctdna_vaf": 0.1289,
+        "hrv_ms": 23.4779,
+        "cortisol": 15.5856,
+        "alpha_power": 5.645,
+        "pupil_mm": 4.5057,
+        "gsr_us": 7.4705,
+        "methylation": 0.4511,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1289: strong reduction \u2014 CRISPR correction progressing. HRV 23.5ms improving.",
+      "status": "improving",
+      "diff": 2
+    },
+    {
+      "step": 27,
+      "t_hours": 13.5,
+      "state": {
+        "ctdna_vaf": 0.1257,
+        "hrv_ms": 23.3483,
+        "cortisol": 15.5827,
+        "alpha_power": 5.4415,
+        "pupil_mm": 4.4945,
+        "gsr_us": 7.3897,
+        "methylation": 0.4555,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1257: strong reduction \u2014 CRISPR correction progressing. HRV 23.3ms improving.",
+      "status": "improving",
+      "diff": 2
+    },
+    {
+      "step": 28,
+      "t_hours": 14.0,
+      "state": {
+        "ctdna_vaf": 0.1214,
+        "hrv_ms": 23.773,
+        "cortisol": 15.7518,
+        "alpha_power": 5.6505,
+        "pupil_mm": 4.4733,
+        "gsr_us": 7.2867,
+        "methylation": 0.4586,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1214: strong reduction \u2014 CRISPR correction progressing. HRV 23.8ms improving.",
+      "status": "improving",
+      "diff": 2
+    },
+    {
+      "step": 29,
+      "t_hours": 14.5,
+      "state": {
+        "ctdna_vaf": 0.1193,
+        "hrv_ms": 23.9548,
+        "cortisol": 15.0705,
+        "alpha_power": 5.5775,
+        "pupil_mm": 4.4483,
+        "gsr_us": 7.1882,
+        "methylation": 0.4602,
+        "temperature_c": 36.8
+      },
+      "ai_interpretation": "ctDNA VAF 0.1193: strong reduction \u2014 CRISPR correction progressing. HRV 24.0ms improving.",
+      "status": "improving",
+      "diff": 2
+    }
+  ],
+  "chain": [
+    {
+      "index": 1,
+      "hash": "00000dcaada710f6",
+      "diff": 3,
+      "label": "Bidirectional protocol spec: cell\u2194chain\u2194AI"
+    },
+    {
+      "index": 2,
+      "hash": "063a72ba0f5d1d7e",
+      "diff": 1,
+      "label": "t+ 0.0h [early     ] ctDNA=0.2177 HRV=16.0ms"
+    },
+    {
+      "index": 3,
+      "hash": "00299c5db3663d1f",
+      "diff": 2,
+      "label": "t+ 1.5h [early     ] ctDNA=0.2110 HRV=16.7ms"
+    },
+    {
+      "index": 4,
+      "hash": "0039139a36ad184e",
+      "diff": 2,
+      "label": "t+ 3.0h [early     ] ctDNA=0.2030 HRV=17.5ms"
+    },
+    {
+      "index": 5,
+      "hash": "00ed5804086a3a8b",
+      "diff": 2,
+      "label": "t+ 4.5h [early     ] ctDNA=0.1935 HRV=18.5ms"
+    },
+    {
+      "index": 6,
+      "hash": "00d53dabc4f82e66",
+      "diff": 2,
+      "label": "t+ 6.0h [responding] ctDNA=0.1815 HRV=19.4ms"
+    },
+    {
+      "index": 7,
+      "hash": "00de7ae2bb784c7b",
+      "diff": 2,
+      "label": "t+ 7.5h [responding] ctDNA=0.1671 HRV=20.4ms"
+    },
+    {
+      "index": 8,
+      "hash": "00cabd3e67848e02",
+      "diff": 2,
+      "label": "t+ 9.0h [responding] ctDNA=0.1554 HRV=21.1ms"
+    },
+    {
+      "index": 9,
+      "hash": "00634fd10fee5034",
+      "diff": 2,
+      "label": "t+10.5h [improving ] ctDNA=0.1473 HRV=21.7ms"
+    },
+    {
+      "index": 10,
+      "hash": "00c0fe94dddbeb2f",
+      "diff": 2,
+      "label": "t+12.0h [improving ] ctDNA=0.1356 HRV=23.1ms"
+    },
+    {
+      "index": 11,
+      "hash": "0043e1887b6bc0b3",
+      "diff": 2,
+      "label": "t+13.5h [improving ] ctDNA=0.1257 HRV=23.3ms"
+    }
+  ]
+}
