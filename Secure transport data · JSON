@@ -1,0 +1,229 @@
+{
+  "generated_at": 1787419809.9972851,
+  "genome_anchor": "b3ba3ff8ff7d5128443d410f295cdc3b",
+  "person_hash": "e1de8a8c7509bb29f64f",
+  "ssh_key": {
+    "key_type": "ed25519",
+    "private_seed": "2da1b0249b9a4ff7...",
+    "public_key_hex": "e6c665487ad74e7c90f8cf318863559dd9a633214eb9a92541bf601d3cdcd629",
+    "fingerprint": "SHA256:c37aff424c969caf5911...",
+    "authorized_key": "ssh-ed25519 AAAA...c37aff424c96 genome:e1de8a8c",
+    "genome_anchor": "b3ba3ff8ff7d5128443d...",
+    "derivation": "HKDF-SHA256(genome_anchor, salt=person_hash, info=DNA-SSH-ED25519)",
+    "note": "Biology is the key. No password, no hardware token."
+  },
+  "tls_config": {
+    "protocol": "TLS 1.3",
+    "key_exchange": [
+      "CRYSTALS-Kyber-1024 (post-quantum)",
+      "X25519 (classical fallback)"
+    ],
+    "authentication": "ECDSA P-256 (transitioning to Dilithium)",
+    "cipher_suites": [
+      "TLS_AES_256_GCM_SHA384",
+      "TLS_CHACHA20_POLY1305_SHA256"
+    ],
+    "forward_secrecy": true,
+    "certificate_type": "X.509 v3",
+    "cert_authority": "Self-signed CA per blockchain network",
+    "openssl_version": "3.5 LTS (April 2025)",
+    "post_quantum": true,
+    "min_rsa_bits": 0,
+    "session_tickets": false,
+    "ocsp_stapling": true,
+    "hsts": "max-age=31536000; includeSubDomains"
+  },
+  "relay_package": {
+    "format": "dna_chain_relay_v1",
+    "block_index": 184,
+    "genome_anchor": "b3ba3ff8ff7d5128443d...",
+    "person_hash": "e1de8a8c7509bb29f64f",
+    "block_signature": "c1805f4be48e4abe207ad96c4ee4cd81...",
+    "hmac_sha256": "c269eed48d6d51231509...",
+    "provenance": {
+      "device_cert_hash": "6cca35d9bc2c0d423fad",
+      "genome_key_fp": "SHA256:c3c48496ce0af354",
+      "block_hash": "0000a709314baf5e",
+      "bitcoin_timestamp": "pending_confirmation",
+      "tls_session_id": "71af0251f605fb15"
+    },
+    "data_hash": "83241c57be1e17cae54583cc7b14ef1f",
+    "relay_timestamp": 1787419809.834885,
+    "verification_steps": [
+      "1. Verify ECDSA block signature with genome public key",
+      "2. Verify HMAC-SHA256 data integrity",
+      "3. Verify block hash chain (each block references previous hash)",
+      "4. Verify Bitcoin timestamp via ots verify proof.ots",
+      "5. Verify genome anchor matches expected study cohort criteria",
+      "6. Verify TLS certificate chain of the transmitting node"
+    ],
+    "ga4gh_passport": {
+      "type": "IdentityChallenge",
+      "genome_claim": "b3ba3ff8ff7d5128",
+      "study_access": "controlled_access",
+      "jwt_audience": "study-server.institution.edu"
+    }
+  },
+  "relay_integrity": {
+    "integrity_verified": true,
+    "checks": {
+      "format_valid": true,
+      "has_genome_anchor": true,
+      "has_signature": true,
+      "has_hmac": true,
+      "has_provenance": true,
+      "has_ga4gh": true,
+      "timestamp_recent": true
+    },
+    "verdict": "ACCEPT \u2014 provenance complete",
+    "data_trustworthy": true
+  },
+  "journey": [
+    {
+      "step": 1,
+      "action": "Empatica E4 reads HRV",
+      "security": "X.509 device cert",
+      "proto": "BLE \u2192 MQTT/TLS"
+    },
+    {
+      "step": 2,
+      "action": "Edge node receives + mines block",
+      "security": "AES-256-GCM + ECDSA",
+      "proto": "MQTT/TLS 8883"
+    },
+    {
+      "step": 3,
+      "action": "OpenSSL signs block with genome key",
+      "security": "HKDF(genome_anchor)\u2192ed25519",
+      "proto": "internal"
+    },
+    {
+      "step": 4,
+      "action": "Node 1 mines + gossips to 2+3",
+      "security": "TLS 1.3 + Kyber + Dilithium",
+      "proto": "HTTPS 5001"
+    },
+    {
+      "step": 5,
+      "action": "3-node consensus",
+      "security": "SHA-256 hash chain verification",
+      "proto": "gossip"
+    },
+    {
+      "step": 6,
+      "action": "OpenTimestamps \u2192 Bitcoin mempool",
+      "security": "TLS + SHA-256 OTS proof",
+      "proto": "HTTPS \u2192 BTC"
+    },
+    {
+      "step": 7,
+      "action": "Study queries via GA4GH Data Connect",
+      "security": "OAuth2 + JWT + TLS",
+      "proto": "HTTPS+GA4GH"
+    },
+    {
+      "step": 8,
+      "action": "Study verifies full provenance",
+      "security": "signature \u2192 hash \u2192 Bitcoin proof",
+      "proto": "local"
+    },
+    {
+      "step": 9,
+      "action": "Research DB accepts with audit trail",
+      "security": "cryptographically complete",
+      "proto": "internal"
+    }
+  ],
+  "chain": [
+    {
+      "index": 1,
+      "hash": "000073d231a3ce8013c2",
+      "diff": 4,
+      "label": "Genome SSH key ed25519 \u2014 biology is the authentication factor"
+    },
+    {
+      "index": 2,
+      "hash": "000110f5ae979d5031df",
+      "diff": 3,
+      "label": "Block signing: ECDSA P-256 \u2192 Dilithium post-quantum"
+    },
+    {
+      "index": 3,
+      "hash": "0003b1faf13350fc32d9",
+      "diff": 3,
+      "label": "TLS: 3.5 LTS (April 2025) + post-quantum Kyber+Dilithium"
+    },
+    {
+      "index": 4,
+      "hash": "00076b6ed0089bc833d3",
+      "diff": 3,
+      "label": "OS: LUKS2+SELinux+tmpfs PHI \u2014 genomic data never unencrypted on disk"
+    },
+    {
+      "index": 5,
+      "hash": "0004e53e03b3fa8a4a93",
+      "diff": 3,
+      "label": "Protocol stack: wss/gRPC/MQTT/FHIR/GA4GH \u2014 all TLS 1.3"
+    },
+    {
+      "index": 6,
+      "hash": "0000752c74f7e7873582",
+      "diff": 4,
+      "label": "Study relay: ACCEPT \u2014 provenance complete"
+    },
+    {
+      "index": 7,
+      "hash": "0ad458ad15a63d205029",
+      "diff": 1,
+      "label": "Journey 1: Empatica E4 reads HRV"
+    },
+    {
+      "index": 8,
+      "hash": "096bc124430954bfb769",
+      "diff": 1,
+      "label": "Journey 2: Edge node receives + mines block"
+    },
+    {
+      "index": 9,
+      "hash": "0e7eef34a4b4523a0538",
+      "diff": 1,
+      "label": "Journey 3: OpenSSL signs block with genome key"
+    },
+    {
+      "index": 10,
+      "hash": "0d42097da41e246f7a09",
+      "diff": 1,
+      "label": "Journey 4: Node 1 mines + gossips to 2+3"
+    },
+    {
+      "index": 11,
+      "hash": "067a26417b50511cdc2c",
+      "diff": 1,
+      "label": "Journey 5: 3-node consensus"
+    },
+    {
+      "index": 12,
+      "hash": "05a5450b3ce24a6c80c6",
+      "diff": 1,
+      "label": "Journey 6: OpenTimestamps \u2192 Bitcoin mempool"
+    },
+    {
+      "index": 13,
+      "hash": "0bbd4948f650dabfce25",
+      "diff": 1,
+      "label": "Journey 7: Study queries via GA4GH Data Connect"
+    },
+    {
+      "index": 14,
+      "hash": "033227388baa8cabd0f2",
+      "diff": 1,
+      "label": "Journey 8: Study verifies full provenance"
+    },
+    {
+      "index": 15,
+      "hash": "05bc2ae484c055c6bd76",
+      "diff": 1,
+      "label": "Journey 9: Research DB accepts with audit trail"
+    }
+  ]
+}
