@@ -1,0 +1,321 @@
+import { useState, useEffect, useRef, useCallback } from "react";
+
+// ── Biological signal stream (mirrors real wearable + lab cadence) ────────────
+const GENOME_ANCHOR = "b3ba3ff8ff7d5128443d410f295c";
+const PERSON_HASH   = "e1de8a8c7509bb29f64f";
+
+const BASE_STATE = {
+  ctdna_vaf:   0.220, hrv_ms:      15.7,
+  cortisol:    23.1,  alpha_power: 8.2,
+  pupil_mm:    5.2,   gsr_us:      9.6,
+  methylation: 0.31,  temperature: 36.8,
+};
+
+// Each tick applies tiny biological drift — CRISPR edit slowly taking effect
+function nextBioState(prev, tick) {
+  const jitter = (lo, hi) => Math.random() * (hi - lo) + lo;
+  const phase  = tick / 60;  // 0→1 over 60 ticks = full session
+  return {
+    ctdna_vaf:   Math.max(0.06, prev.ctdna_vaf   - jitter(0.0005, 0.0030)),
+    hrv_ms:      Math.min(28,   prev.hrv_ms      + jitter(-0.15, 0.55)),
+    cortisol:    Math.max(11,   prev.cortisol    - jitter(-0.15, 0.50)),
+    alpha_power: Math.min(13,   Math.max(4, prev.alpha_power + jitter(-0.20, 0.30))),
+    pupil_mm:    Math.max(3.0,  prev.pupil_mm    - jitter(0.00, 0.04)),
+    gsr_us:      Math.max(3.0,  prev.gsr_us      - jitter(0.00, 0.12)),
+    methylation: Math.min(0.66, prev.methylation + jitter(0.001, 0.007)),
+    temperature: Math.max(36.2, Math.min(37.2, prev.temperature + jitter(-0.02, 0.02))),
+  };
+}
+
+function mineSHA256(payload, diff) {
+  // Lightweight deterministic nonce-finding (simulates PoW)
+  const data = JSON.stringify(payload);
+  const prefix = "0".repeat(diff);
+  let nonce = Math.floor(Math.random() * 999) + 1;
+  // Simulate finding valid hash (not real SHA256 in browser — represents the concept)
+  const fakeHash = Array.from({ length: diff }, () => "0").join("") +
+    Math.random().toString(16).slice(2, 16).toUpperCase().padEnd(64 - diff, "0");
+  return { hash: fakeHash.slice(0, 16) + "...", nonce, difficulty: diff };
+}
+
+function aiInterpret(state, prev, tick) {
+  const vafDelta = prev ? (prev.ctdna_vaf - state.ctdna_vaf) : 0;
+  const hrvDelta = prev ? (state.hrv_ms - prev.hrv_ms) : 0;
+
+  if (state.ctdna_vaf < 0.12) {
+    return {
+      text: `ctDNA VAF ${state.ctdna_vaf.toFixed(4)} — substantial reduction (${(((BASE_STATE.ctdna_vaf - state.ctdna_vaf) / BASE_STATE.ctdna_vaf) * 100).toFixed(1)}% from baseline). CRISPR correction confirmed. HRV ${state.hrv_ms.toFixed(1)}ms improving.`,
+      status: "confirmed", confidence: 0.92
+    };
+  } else if (state.ctdna_vaf < 0.17) {
+    return {
+      text: `ctDNA VAF ${state.ctdna_vaf.toFixed(4)} — moderate response. Edit taking effect. Methylation recovering ${state.methylation.toFixed(3)} → 0.65 target. Continue monitoring.`,
+      status: "responding", confidence: 0.78
+    };
+  } else if (vafDelta > 0.002) {
+    return {
+      text: `ctDNA falling ${vafDelta.toFixed(4)} this reading — positive trend. HRV ${state.hrv_ms.toFixed(1)}ms ${hrvDelta > 0 ? "↑" : "↓"}. Cortisol ${state.cortisol.toFixed(1)} nmol/L.`,
+      status: "improving", confidence: 0.65
+    };
+  }
+  return {
+    text: `Early phase: ctDNA ${state.ctdna_vaf.toFixed(4)}. Monitoring all ${Object.keys(state).length} biomarkers. CRISPR edit begun.`,
+    status: "watching", confidence: 0.45
+  };
+}
+
+function shouldMine(curr, prev) {
+  if (!prev) return { mine: true, diff: 1, reason: "Initial state" };
+  const vafDelta = Math.abs(curr.ctdna_vaf - prev.ctdna_vaf);
+  const hrvDelta = Math.abs(curr.hrv_ms - prev.hrv_ms);
+  if (vafDelta > 0.008) return { mine: true, diff: 3, reason: `ctDNA Δ=${vafDelta.toFixed(4)}` };
+  if (vafDelta > 0.003) return { mine: true, diff: 2, reason: `ctDNA Δ=${vafDelta.toFixed(4)}` };
+  if (hrvDelta > 0.5)   return { mine: true, diff: 2, reason: `HRV Δ=${hrvDelta.toFixed(2)}ms` };
+  if (vafDelta > 0.001) return { mine: true, diff: 1, reason: `ctDNA Δ=${vafDelta.toFixed(4)}` };
+  return { mine: false };
+}
+
+const STATUS_COLORS = {
+  confirmed: "#1D9E75", responding: "#378ADD",
+  improving: "#BA7517", watching: "#888780",
+  early: "#5F5E5A"
+};
+
+const DIFF_LABELS = { 1:"d=1 real-time", 2:"d=2 wearable", 3:"d=3 significant", 4:"d=4 validated", 5:"d=5 confirmed" };
+
+// ─────────────────────────────────────────────────────────────
+export default function LiveChainDashboard() {
+  const [chain, setChain]       = useState([]);
+  const [bioState, setBioState] = useState(BASE_STATE);
+  const [prevState, setPrev]    = useState(null);
+  const [aiState, setAiState]   = useState({ text: "Initialising...", status: "watching", confidence: 0 });
+  const [tick, setTick]         = useState(0);
+  const [running, setRunning]   = useState(true);
+  const [speed, setSpeed]       = useState(1200);
+  const [trainingAcc, setTrainingAcc] = useState(42.9);
+  const [modelVersion, setModelVersion] = useState(7);
+  const chainEndRef             = useRef(null);
+
+  const step = useCallback(() => {
+    setTick(t => {
+      const nextTick = t + 1;
+      setBioState(curr => {
+        const next = nextBioState(curr, nextTick);
+        setPrev(curr);
+        const { mine, diff, reason } = shouldMine(next, curr);
+        if (mine) {
+          const ai  = aiInterpret(next, curr, nextTick);
+          setAiState(ai);
+          const block = mineSHA256({
+            event: "live_bio_event", tick: nextTick,
+            ctdna_vaf: next.ctdna_vaf, hrv_ms: next.hrv_ms,
+            cortisol: next.cortisol, genome_anchor: GENOME_ANCHOR,
+            ai_status: ai.status, confidence: ai.confidence,
+          }, diff);
+          setChain(c => [...c.slice(-80), {
+            index: c.length + 1, ...block, diff, reason,
+            ai_status: ai.status, confidence: ai.confidence,
+            ctdna: next.ctdna_vaf, hrv: next.hrv_ms,
+            timestamp: new Date().toISOString().slice(11, 23),
+          }]);
+          // Simulate model improving
+          setTrainingAcc(a => Math.min(96, a + Math.random() * 0.4));
+          if (nextTick % 15 === 0) setModelVersion(v => v + 1);
+        }
+        return next;
+      });
+      return nextTick;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!running) return;
+    const id = setInterval(step, speed);
+    return () => clearInterval(id);
+  }, [running, speed, step]);
+
+  useEffect(() => {
+    chainEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, [chain.length]);
+
+  const pct = (val, base, target) =>
+    Math.min(100, Math.max(0, ((val - base) / (target - base)) * 100));
+  const vafdrop = ((BASE_STATE.ctdna_vaf - bioState.ctdna_vaf) / BASE_STATE.ctdna_vaf * 100).toFixed(1);
+  const accentCol = STATUS_COLORS[aiState.status] || "#888780";
+
+  return (
+    <div style={{ fontFamily: "'SF Mono', 'Fira Code', monospace", background: "var(--surface-0)", minHeight: "100vh", padding: "0" }}>
+
+      {/* Header */}
+      <div style={{ background: "var(--surface-1)", borderBottom: "1px solid var(--border)", padding: "12px 20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div>
+          <span style={{ fontSize: 13, fontWeight: 500, color: "var(--text-primary)", fontFamily: "var(--font-sans)" }}>Live chain</span>
+          <span style={{ fontSize: 11, color: "var(--text-muted)", marginLeft: 10, fontFamily: "var(--font-sans)" }}>genome:{GENOME_ANCHOR.slice(0,12)}... · person:{PERSON_HASH.slice(0,10)}...</span>
+        </div>
+        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+          <span style={{ fontSize: 11, color: "var(--text-muted)", fontFamily: "var(--font-sans)" }}>speed</span>
+          <select value={speed} onChange={e => setSpeed(+e.target.value)} style={{ fontSize: 11, background: "var(--surface-2)", border: "1px solid var(--border)", borderRadius: 4, padding: "2px 6px", color: "var(--text-primary)" }}>
+            <option value={2400}>slow</option>
+            <option value={1200}>normal</option>
+            <option value={600}>fast</option>
+            <option value={200}>live</option>
+          </select>
+          <button onClick={() => setRunning(r => !r)} style={{ fontSize: 11, padding: "3px 10px", background: running ? "var(--bg-danger)" : "var(--bg-success)", border: "none", borderRadius: 4, cursor: "pointer", color: "var(--text-primary)", fontFamily: "var(--font-sans)" }}>
+            {running ? "pause" : "resume"}
+          </button>
+        </div>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 1, background: "var(--border)" }}>
+
+        {/* LEFT: Biological signals */}
+        <div style={{ background: "var(--surface-1)", padding: 16 }}>
+          <div style={{ fontSize: 10, color: "var(--text-muted)", marginBottom: 12, fontFamily: "var(--font-sans)", textTransform: "uppercase", letterSpacing: ".08em" }}>biological signals · live</div>
+
+          {[
+            { key: "ctdna_vaf",   label: "ctDNA VAF",    unit: "",      base: BASE_STATE.ctdna_vaf,   target: 0.06,  invert: true,  precision: 4 },
+            { key: "hrv_ms",      label: "HRV",          unit: " ms",   base: BASE_STATE.hrv_ms,      target: 28,    invert: false, precision: 1 },
+            { key: "cortisol",    label: "Cortisol",     unit: " nmol/L",base: BASE_STATE.cortisol,   target: 11,    invert: true,  precision: 1 },
+            { key: "methylation", label: "BRCA1 methyl", unit: "",      base: BASE_STATE.methylation, target: 0.65,  invert: false, precision: 3 },
+            { key: "alpha_power", label: "EEG alpha",    unit: " μV²",  base: BASE_STATE.alpha_power, target: 12,    invert: false, precision: 2 },
+            { key: "gsr_us",      label: "GSR",          unit: " μS",   base: BASE_STATE.gsr_us,      target: 3.0,   invert: true,  precision: 2 },
+            { key: "pupil_mm",    label: "Pupil",        unit: " mm",   base: BASE_STATE.pupil_mm,    target: 3.0,   invert: true,  precision: 2 },
+          ].map(({ key, label, unit, base, target, invert, precision }) => {
+            const val  = bioState[key];
+            const prev_val = prevState?.[key] ?? val;
+            const prog = invert ? pct(base - val + target, target, base) : pct(val, base, target);
+            const dir  = val > prev_val ? "↑" : val < prev_val ? "↓" : "—";
+            const isGood = invert ? val < prev_val : val > prev_val;
+            const col  = isGood ? "#1D9E75" : val === prev_val ? "var(--text-muted)" : "#E24B4A";
+            return (
+              <div key={key} style={{ marginBottom: 11 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+                  <span style={{ fontSize: 11, color: "var(--text-secondary)", fontFamily: "var(--font-sans)" }}>{label}</span>
+                  <span style={{ fontSize: 12, fontWeight: 500, color: col }}>{dir} {val.toFixed(precision)}{unit}</span>
+                </div>
+                <div style={{ height: 4, background: "var(--border-strong)", borderRadius: 2, overflow: "hidden" }}>
+                  <div style={{ width: `${Math.min(100, Math.max(2, prog))}%`, height: "100%", background: col, borderRadius: 2, transition: "width 0.8s ease" }} />
+                </div>
+              </div>
+            );
+          })}
+
+          <div style={{ marginTop: 14, padding: "8px 10px", background: "var(--surface-0)", borderRadius: 6, border: "1px solid var(--border)" }}>
+            <div style={{ fontSize: 10, color: "var(--text-muted)", fontFamily: "var(--font-sans)", marginBottom: 4 }}>cell → chain pathway</div>
+            {["ctDNA sheds every ~2h → liquid biopsy reads VAF", "Wearable: HRV/GSR/temp continuous", "Blood draw: cortisol/IL-6 every 8h", "OpenBCI: EEG alpha 250 Hz → hash"].map(s => (
+              <div key={s} style={{ fontSize: 10, color: "var(--text-secondary)", fontFamily: "var(--font-sans)", lineHeight: 1.6 }}>· {s}</div>
+            ))}
+          </div>
+        </div>
+
+        {/* CENTER: Growing blockchain */}
+        <div style={{ background: "var(--surface-1)", padding: 16, display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+            <span style={{ fontSize: 10, color: "var(--text-muted)", fontFamily: "var(--font-sans)", textTransform: "uppercase", letterSpacing: ".08em" }}>chain growing live · {chain.length} blocks</span>
+            <span style={{ fontSize: 11, color: accentCol, fontFamily: "var(--font-sans)", fontWeight: 500 }}>{aiState.status}</span>
+          </div>
+
+          <div style={{ flex: 1, overflowY: "auto", maxHeight: 420 }}>
+            {chain.length === 0 && (
+              <div style={{ fontSize: 11, color: "var(--text-muted)", fontFamily: "var(--font-sans)", padding: "40px 0", textAlign: "center" }}>waiting for biological signal...</div>
+            )}
+            {chain.map((block, i) => {
+              const col = STATUS_COLORS[block.ai_status] || "var(--border-strong)";
+              return (
+                <div key={block.index} style={{ display: "flex", gap: 8, padding: "5px 0", borderBottom: "1px solid var(--border)", alignItems: "flex-start" }}>
+                  <span style={{ fontSize: 10, color: "var(--text-muted)", minWidth: 26, fontFamily: "var(--font-sans)" }}>#{block.index}</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: "flex", gap: 6, marginBottom: 2, flexWrap: "wrap" }}>
+                      <span style={{ fontSize: 9, background: col, color: "#fff", padding: "1px 5px", borderRadius: 3, fontFamily: "var(--font-sans)" }}>d={block.diff}</span>
+                      <span style={{ fontSize: 10, color: col, fontFamily: "var(--font-sans)", fontWeight: 500 }}>ctDNA {block.ctdna?.toFixed(4)}</span>
+                      <span style={{ fontSize: 10, color: "var(--text-muted)", fontFamily: "var(--font-sans)" }}>HRV {block.hrv?.toFixed(1)}ms</span>
+                    </div>
+                    <div style={{ fontSize: 9, color: "var(--text-muted)", fontFamily: "monospace" }}>{block.hash} {block.timestamp}</div>
+                    <div style={{ fontSize: 9, color: "var(--text-secondary)", fontFamily: "var(--font-sans)" }}>{block.reason}</div>
+                  </div>
+                </div>
+              );
+            })}
+            <div ref={chainEndRef} />
+          </div>
+
+          <div style={{ marginTop: 8, padding: "6px 8px", background: "var(--surface-0)", borderRadius: 5, border: `1px solid ${accentCol}`, display: "flex", gap: 8 }}>
+            <div style={{ width: 6, height: 6, borderRadius: "50%", background: accentCol, marginTop: 3, flexShrink: 0, animation: running ? "pulse 1s infinite" : "none" }} />
+            <span style={{ fontSize: 10, color: "var(--text-secondary)", fontFamily: "var(--font-sans)", lineHeight: 1.5 }}>
+              {aiState.text.slice(0, 90)}{aiState.text.length > 90 ? "..." : ""}
+            </span>
+          </div>
+        </div>
+
+        {/* RIGHT: AI training loop */}
+        <div style={{ background: "var(--surface-1)", padding: 16 }}>
+          <div style={{ fontSize: 10, color: "var(--text-muted)", marginBottom: 12, fontFamily: "var(--font-sans)", textTransform: "uppercase", letterSpacing: ".08em" }}>AI training loop · live</div>
+
+          {/* Model metrics */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 14 }}>
+            {[
+              { label: "Model version",  val: `v${modelVersion}`,     col: "#378ADD" },
+              { label: "Accuracy",       val: `${trainingAcc.toFixed(1)}%`,  col: "#1D9E75" },
+              { label: "Training blocks",val: chain.length,             col: "#BA7517" },
+              { label: "Confidence",     val: `${(aiState.confidence * 100).toFixed(0)}%`, col: accentCol },
+            ].map(({ label, val, col }) => (
+              <div key={label} style={{ padding: "7px 9px", background: "var(--surface-0)", borderRadius: 6, border: "1px solid var(--border)" }}>
+                <div style={{ fontSize: 10, color: "var(--text-muted)", fontFamily: "var(--font-sans)", marginBottom: 2 }}>{label}</div>
+                <div style={{ fontSize: 16, fontWeight: 500, color: col, fontFamily: "var(--font-sans)" }}>{val}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Cell as node */}
+          <div style={{ padding: "10px 12px", background: "var(--surface-0)", borderRadius: 6, border: "1px solid var(--border)", marginBottom: 12 }}>
+            <div style={{ fontSize: 10, color: "var(--text-muted)", fontFamily: "var(--font-sans)", marginBottom: 8 }}>cell as blockchain node</div>
+            {[
+              { role: "storage",     val: "DNA sequence",    col: "#534AB7" },
+              { role: "state",       val: "methylation",     col: "#0F6E56" },
+              { role: "broadcast",   val: "ctDNA in blood",  col: "#993C1D" },
+              { role: "update",      val: "CRISPR edit",     col: "#854F0B" },
+              { role: "network",     val: "circulatory sys", col: "#185FA5" },
+              { role: "consensus",   val: "immune response", col: "#3B6D11" },
+            ].map(({ role, val, col }) => (
+              <div key={role} style={{ display: "flex", gap: 8, marginBottom: 5 }}>
+                <span style={{ fontSize: 9, color: "#fff", background: col, padding: "1px 5px", borderRadius: 3, minWidth: 56, textAlign: "center", fontFamily: "var(--font-sans)" }}>{role}</span>
+                <span style={{ fontSize: 11, color: "var(--text-secondary)", fontFamily: "var(--font-sans)" }}>{val}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* ctDNA drop summary */}
+          <div style={{ padding: "10px 12px", background: "var(--surface-0)", borderRadius: 6, border: `1px solid ${vafdrop > 10 ? "#1D9E75" : "var(--border)"}`, marginBottom: 10 }}>
+            <div style={{ fontSize: 10, color: "var(--text-muted)", fontFamily: "var(--font-sans)", marginBottom: 6 }}>CRISPR edit progress</div>
+            <div style={{ fontSize: 20, fontWeight: 500, color: vafdrop > 10 ? "#1D9E75" : "#BA7517", fontFamily: "var(--font-sans)" }}>{vafdrop}%</div>
+            <div style={{ fontSize: 10, color: "var(--text-secondary)", fontFamily: "var(--font-sans)" }}>ctDNA reduction from baseline</div>
+            <div style={{ marginTop: 7, height: 6, background: "var(--border-strong)", borderRadius: 3, overflow: "hidden" }}>
+              <div style={{ width: `${Math.min(100, parseFloat(vafdrop) * 1.5)}%`, height: "100%", background: vafdrop > 10 ? "#1D9E75" : "#BA7517", borderRadius: 3, transition: "width 1s ease" }} />
+            </div>
+          </div>
+
+          {/* Training data breakdown */}
+          <div style={{ padding: "10px 12px", background: "var(--surface-0)", borderRadius: 6, border: "1px solid var(--border)" }}>
+            <div style={{ fontSize: 10, color: "var(--text-muted)", fontFamily: "var(--font-sans)", marginBottom: 6 }}>this chain as training data</div>
+            {[
+              { label: "Person's blocks",    val: chain.length,                 col: "#534AB7" },
+              { label: "Biomarker samples",  val: tick,                          col: "#0F6E56" },
+              { label: "AI predictions",     val: Math.floor(chain.length * 0.7), col: "#BA7517" },
+              { label: "Confirmed correct",  val: Math.floor(chain.length * 0.43), col: "#1D9E75" },
+            ].map(({ label, val, col }) => (
+              <div key={label} style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                <span style={{ fontSize: 10, color: "var(--text-secondary)", fontFamily: "var(--font-sans)" }}>{label}</span>
+                <span style={{ fontSize: 11, color: col, fontFamily: "var(--font-sans)", fontWeight: 500 }}>{val}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+        ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+      `}</style>
+    </div>
+  );
+}
