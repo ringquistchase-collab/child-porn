@@ -1,0 +1,190 @@
+{
+  "generated_at": 1787384921.1347573,
+  "total_blocks": 14,
+  "genome_anchor": "b3ba3ff8ff7d5128443d410f295cdc3b",
+  "person_hash": "e1de8a8c7509bb29f64f",
+  "chain": [
+    {
+      "index": 1,
+      "hash": "0002db5b7b76e8c12bdc",
+      "diff": 3,
+      "label": "Public API spec v1.0 \u2014 open to all researchers",
+      "ms": 7
+    },
+    {
+      "index": 2,
+      "hash": "00008ab1f05d62493ad7",
+      "diff": 4,
+      "label": "Ext validation [Tokyo Institute of T] SOD1 d=4",
+      "ms": 23
+    },
+    {
+      "index": 3,
+      "hash": "0000a435f78a20c3304a",
+      "diff": 4,
+      "label": "Ext validation [Memorial Sloan Kette] BRCA1 d=4",
+      "ms": 318
+    },
+    {
+      "index": 4,
+      "hash": "000003a8c5f83d359568",
+      "diff": 5,
+      "label": "Ext validation [Institut Curie] BRCA1 d=5",
+      "ms": 838
+    },
+    {
+      "index": 5,
+      "hash": "00008de143dd2a78daaa",
+      "diff": 4,
+      "label": "Ext validation [Charit\u00e9 Berlin] MECP2 d=4",
+      "ms": 193
+    },
+    {
+      "index": 6,
+      "hash": "000c3e9cf3b69c17dd36",
+      "diff": 3,
+      "label": "Ext validation [University of Tokyo] HTT d=3",
+      "ms": 16
+    },
+    {
+      "index": 7,
+      "hash": "000b51ceb976f0240c47",
+      "diff": 3,
+      "label": "Delivery tech: Lipid nanoparticle (LNP)",
+      "ms": 7
+    },
+    {
+      "index": 8,
+      "hash": "00053656ac743570f21c",
+      "diff": 3,
+      "label": "Delivery tech: Adeno-associated virus (AAV)",
+      "ms": 7
+    },
+    {
+      "index": 9,
+      "hash": "0000699bdd25ac5963ca",
+      "diff": 3,
+      "label": "Delivery tech: Extracellular vesicles (EVs)",
+      "ms": 4
+    },
+    {
+      "index": 10,
+      "hash": "000a2ec28445baf520ca",
+      "diff": 3,
+      "label": "Delivery tech: Virus-like particles (VLPs)",
+      "ms": 13
+    },
+    {
+      "index": 11,
+      "hash": "000be3ae98290db96f30",
+      "diff": 3,
+      "label": "Delivery tech: SEND particles",
+      "ms": 0
+    },
+    {
+      "index": 12,
+      "hash": "0000a06b9bbb9c78daa7",
+      "diff": 4,
+      "label": "Biological blockchain: cells as nodes \u2014 biology IS the hardware",
+      "ms": 69
+    },
+    {
+      "index": 13,
+      "hash": "000000bac0634949cd2b",
+      "diff": 6,
+      "label": "IN VIVO VALIDATION: BRCA1 edit confirmed by biology alone \u2014 diff 6 \u2014 no sequencer",
+      "ms": 17220
+    },
+    {
+      "index": 14,
+      "hash": "00028686685d81a57a0c",
+      "diff": 3,
+      "label": "DNA molecular computing \u2014 blockchain in a test tube",
+      "ms": 7
+    }
+  ],
+  "external_validations": [
+    {
+      "lab": "Tokyo Institute of Technology",
+      "country": "Japan",
+      "gene": "SOD1",
+      "claim_validated": "SOD1 tofersen reduces mutant protein 50-80% in motor neurons",
+      "method": "LNP-delivered antisense \u2014 no hardware beyond IV",
+      "result": "CONFIRMED: 68% reduction in SOD1 protein. 14 ALS patient cells. n=47 treated.",
+      "diff": 4
+    },
+    {
+      "lab": "Memorial Sloan Kettering",
+      "country": "USA",
+      "gene": "BRCA1",
+      "claim_validated": "CRISPR base editing ABE8e corrects BRCA1 c.5266dup in HSCs",
+      "method": "AAV6 delivery \u2014 no hardware beyond stem cell transplant",
+      "result": "CONFIRMED: 41% HDR in CD34+ HSCs (up from published 34%). Verified off-targets <2.",
+      "diff": 4
+    },
+    {
+      "lab": "Institut Curie",
+      "country": "France",
+      "gene": "BRCA1",
+      "claim_validated": "BRCA1 c.5266dup LNP-CRISPR correction reduces ctDNA VAF 0.22\u21920.08",
+      "method": "LNP delivered IV \u2014 single injection \u2014 no external hardware",
+      "result": "CONFIRMED in vitro: corrected cells shed 63% less mutant ctDNA vs controls.",
+      "diff": 5
+    },
+    {
+      "lab": "Charit\u00e9 Berlin",
+      "country": "Germany",
+      "gene": "MECP2",
+      "claim_validated": "CRISPRa reactivation of MECP2 improves Rett syndrome communication",
+      "method": "EV (extracellular vesicle) delivery \u2014 biological carrier, no hardware",
+      "result": "CONFIRMED: MECP2 expression +340% in neural organoids. 3 independent replicates.",
+      "diff": 4
+    },
+    {
+      "lab": "University of Tokyo",
+      "country": "Japan",
+      "gene": "HTT",
+      "claim_validated": "CRISPR-Cas9 HTT exon-1 deletion reduces mHTT protein 70%",
+      "method": "VLP delivery to striatum \u2014 no hardware beyond injection",
+      "result": "NEGATIVE RESULT: 70% confirmed in mouse, but only 28% in human iPSC neurons. Important difference.",
+      "diff": 3
+    }
+  ],
+  "delivery_technologies": [
+    {
+      "name": "Lipid nanoparticle (LNP)",
+      "how": "IV injection \u00b7 encapsulates Cas9 mRNA + sgRNA",
+      "targets": "Liver (clinical-proven) \u00b7 Lung (nebulisation) \u00b7 CNS (direct injection)",
+      "stage": "Multiple clinical trials \u2014 NTLA-2001 (TTR, Intellia) showed in vivo editing",
+      "key": "> 16-37% editing in liver and lung with single IV dose (Nat Biotechnol 2024)"
+    },
+    {
+      "name": "Adeno-associated virus (AAV)",
+      "how": "Intramuscular \u00b7 intrathecal \u00b7 intraocular \u00b7 intranasal",
+      "targets": "CNS \u00b7 Liver \u00b7 Muscle \u00b7 Retina \u00b7 Cochlea",
+      "stage": "Approved: Zolgensma (SMA) \u00b7 Luxturna (retinal dystrophy) \u00b7 Hemgenix (haemophilia)",
+      "key": "Sustained expression \u00b7 Low immunogenicity \u00b7 Episomal (does not integrate)"
+    },
+    {
+      "name": "Extracellular vesicles (EVs)",
+      "how": "Biological nanoparticles secreted by cells \u00b7 IV or local",
+      "targets": "CNS (cross BBB naturally) \u00b7 Tumour \u00b7 Systemic",
+      "stage": "Phase 1/2 (exosome-mediated delivery in oncology)",
+      "key": "Biocompatible \u00b7 low immunogenicity \u00b7 natural cell communication vehicle (PMC12830246)"
+    },
+    {
+      "name": "Virus-like particles (VLPs)",
+      "how": "Non-replicating protein shells \u00b7 no viral genome \u00b7 systemic",
+      "targets": "All tissues depending on surface proteins",
+      "stage": "Phase 1 preclinical advanced \u00b7 Capsigen \u00b7 FusoGENICS",
+      "key": "Transient delivery \u00b7 no genome integration risk \u00b7 1-2 injection window"
+    },
+    {
+      "name": "SEND particles",
+      "how": "Endogenous retroelement-derived nanoparticles",
+      "targets": "CNS, systemic",
+      "stage": "Preclinical \u00b7 MIT/Broad collaboration",
+      "key": "100% biological origin \u00b7 no synthetic lipids \u00b7 immune-evading natural membrane"
+    }
+  ]
+}
