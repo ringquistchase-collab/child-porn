@@ -1,0 +1,168 @@
+{
+  "generated_at": 1787509536.56619,
+  "did": "did:dna:b3ba3ff8ff7d5128443d410f295cdc3b",
+  "genome_anchor": "b3ba3ff8ff7d5128443d410f295cdc3b",
+  "person_hash": "e1de8a8c7509bb29f64f",
+  "total_blocks": 26,
+  "vcs_issued": 6,
+  "research_connections": 10,
+  "manipulation_blocked": 3,
+  "chain": [
+    {
+      "index": 1,
+      "hash": "000000aa239b9320aa55",
+      "diff": 6,
+      "label": "DID GENESIS: did:dna:b3ba3ff8ff7d5128443d410f295cdc3b \u2014 diff=6 highest conviction \u2014 biology IS the key"
+    },
+    {
+      "index": 2,
+      "hash": "00000b760f5fe08d3174",
+      "diff": 5,
+      "label": "VC: vc:communication:preferred-pace \u2014 genome-signed immutable"
+    },
+    {
+      "index": 3,
+      "hash": "000008c4cf0a7b8b882b",
+      "diff": 5,
+      "label": "VC: vc:communication:yes-signal \u2014 genome-signed immutable"
+    },
+    {
+      "index": 4,
+      "hash": "000007d5cf8f1981597f",
+      "diff": 5,
+      "label": "VC: vc:voice:ownership \u2014 genome-signed immutable"
+    },
+    {
+      "index": 5,
+      "hash": "00000ed3a9f0d7f73bc5",
+      "diff": 5,
+      "label": "VC: vc:identity:communication-style \u2014 genome-signed immutable"
+    },
+    {
+      "index": 6,
+      "hash": "000004d18275b42da9c1",
+      "diff": 5,
+      "label": "VC: vc:medical:advance-directive \u2014 genome-signed immutable"
+    },
+    {
+      "index": 7,
+      "hash": "0000032a79f0be388f07",
+      "diff": 5,
+      "label": "VC: vc:research:consent \u2014 genome-signed immutable"
+    },
+    {
+      "index": 8,
+      "hash": "008a0d34cdaafe201f2e",
+      "diff": 2,
+      "label": "Voice use: AAC selection spoken aloud (\u2713)"
+    },
+    {
+      "index": 9,
+      "hash": "00bcb0001379da8a2e33",
+      "diff": 2,
+      "label": "Voice use: Medical consultation reply (\u2713)"
+    },
+    {
+      "index": 10,
+      "hash": "00eb1de1dc6d12d789c0",
+      "diff": 2,
+      "label": "Voice use: Message to grandchildren (recorded) (\u2713)"
+    },
+    {
+      "index": 11,
+      "hash": "0000f6f8f3beaf9484d6",
+      "diff": 4,
+      "label": "BLOCKED: BLOCKED \u2014 unknown app attempted voice cl (\u2717)"
+    },
+    {
+      "index": 12,
+      "hash": "0000cc0d99e5f1469fef",
+      "diff": 4,
+      "label": "BLOCKED: BLOCKED \u2014 care agency tried to reset voi (\u2717)"
+    },
+    {
+      "index": 13,
+      "hash": "000e30040fc00ef2b782",
+      "diff": 3,
+      "label": "Research connection: ISAAC [READ-ONLY] aac_research"
+    },
+    {
+      "index": 14,
+      "hash": "000a988cc822dc08cd31",
+      "diff": 3,
+      "label": "Research connection: ALS Association [READ-ONLY] als_research"
+    },
+    {
+      "index": 15,
+      "hash": "00057b8d7b1f5579b345",
+      "diff": 3,
+      "label": "Research connection: Communication Matters [READ-ONLY] aac_research"
+    },
+    {
+      "index": 16,
+      "hash": "00053762b4bbd43601f3",
+      "diff": 3,
+      "label": "Research connection: NORD [READ-ONLY] rare_disease"
+    },
+    {
+      "index": 17,
+      "hash": "0006b3a7328c17efb3b1",
+      "diff": 3,
+      "label": "Research connection: PatientsLikeMe [READ-ONLY] patient_network"
+    },
+    {
+      "index": 18,
+      "hash": "0001a54cb449a95f415e",
+      "diff": 3,
+      "label": "Research connection: AbleGamers [READ-ONLY] gaming_access"
+    },
+    {
+      "index": 19,
+      "hash": "0008f5a0d9e3de2887e3",
+      "diff": 3,
+      "label": "Research connection: Autism Science Foundation [READ-ONLY] autism_research"
+    },
+    {
+      "index": 20,
+      "hash": "000ae6a18cb71c6a8c64",
+      "diff": 3,
+      "label": "Research connection: W3C ARIA [READ-ONLY] standards"
+    },
+    {
+      "index": 21,
+      "hash": "00009da23355cd7924e5",
+      "diff": 3,
+      "label": "Research connection: UN CRPD Monitor [READ-ONLY] legal_framework"
+    },
+    {
+      "index": 22,
+      "hash": "000a76785b24f5fb50d1",
+      "diff": 3,
+      "label": "Research connection: EU eIDAS 2.0 [READ-ONLY] identity_standard"
+    },
+    {
+      "index": 23,
+      "hash": "000005f0198309c21f65",
+      "diff": 4,
+      "label": "MANIPULATION BLOCKED: Care agency changes AAC voice to 'cheerf"
+    },
+    {
+      "index": 24,
+      "hash": "0000365b3c4e909e6990",
+      "diff": 4,
+      "label": "MANIPULATION BLOCKED: AI generates 'happy' response when bioma"
+    },
+    {
+      "index": 25,
+      "hash": "0000e9c5b2f7d6976502",
+      "diff": 4,
+      "label": "MANIPULATION DETECTED: New nurse speaks to Miguel instead of Ro"
+    },
+    {
+      "index": 26,
+      "hash": "0000aa119bbbfc3f0c98",
+      "diff": 4,
+      "label": "MANIPULATION BLOCKED: Researcher requests raw voice audio for "
+    }
+  ]
+}
