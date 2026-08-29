@@ -1,0 +1,99 @@
+{
+  "timestamp": "2026-08-29T20:37:37.987794Z",
+  "mode": "PARTIAL",
+  "passed": 8,
+  "total": 17,
+  "checks": {
+    "anthropic.api": {
+      "ok": true,
+      "category": "network",
+      "fix": "check internet"
+    },
+    "huggingface.api": {
+      "ok": true,
+      "category": "network",
+      "fix": "check internet"
+    },
+    "bitcoin.ots": {
+      "ok": true,
+      "category": "network",
+      "fix": "allow egress"
+    },
+    "clinvar.api": {
+      "ok": true,
+      "category": "network",
+      "fix": "allow egress"
+    },
+    "key.anthropic": {
+      "ok": false,
+      "category": "key",
+      "fix": "export ANTHROPIC_API_KEY=sk-ant-..."
+    },
+    "key.pinata": {
+      "ok": false,
+      "category": "key",
+      "fix": "export PINATA_JWT=..."
+    },
+    "key.hf": {
+      "ok": false,
+      "category": "key",
+      "fix": "export HF_TOKEN=hf_..."
+    },
+    "key.openai": {
+      "ok": false,
+      "category": "key",
+      "fix": "export OPENAI_API_KEY=sk-..."
+    },
+    "node.5001": {
+      "ok": false,
+      "category": "node",
+      "fix": "nohup python3 node_server.py --port 5001 &"
+    },
+    "node.5002": {
+      "ok": false,
+      "category": "node",
+      "fix": "nohup python3 node_server.py --port 5002 --bootstrap http://localhost:5001 &"
+    },
+    "node.5003": {
+      "ok": false,
+      "category": "node",
+      "fix": "nohup python3 node_server.py --port 5003 --bootstrap http://localhost:5001 &"
+    },
+    "ollama.local": {
+      "ok": false,
+      "category": "ai",
+      "fix": "ollama serve"
+    },
+    "mqtt.broker": {
+      "ok": false,
+      "category": "iot",
+      "fix": "docker run -p 1883:1883 eclipse-mosquitto"
+    },
+    "dep.flask": {
+      "ok": true,
+      "category": "dep",
+      "fix": "pip install flask"
+    },
+    "dep.requests": {
+      "ok": true,
+      "category": "dep",
+      "fix": "pip install requests"
+    },
+    "dep.cryptography": {
+      "ok": true,
+      "category": "dep",
+      "fix": "pip install cryptography"
+    },
+    "data.chain": {
+      "ok": true,
+      "category": "data",
+      "fix": "copy *_data.json from Claude outputs"
+    }
+  },
+  "ai_reachable": true,
+  "anthropic_key": false,
+  "nodes_running": false,
+  "chain_data": true,
+  "bitcoin_reachable": true,
+  "ipfs_key": false
+}
