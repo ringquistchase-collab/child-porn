@@ -1,0 +1,5 @@
+import DNAChain from './dna-chain-sdk.js';
+
+const chain = new DNAChain({ anthropicKey: process.env.ANTHROPIC_API_KEY });
+chain.status(); // prints honest status of all 15 services
+const block = await chain.mine({ event: 'test' }, 3, 'Hello chain');
