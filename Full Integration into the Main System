@@ -1,0 +1,66 @@
+class EnhancedDNA_EEG_HormoneSystem(DNA_EEG_Hormone_BrainSystem):
+    """
+    Enhanced system with adrenochrome integration
+    """
+    
+    def __init__(self, output_size: Tuple[int, int] = (512, 512)):
+        super().__init__(output_size)
+        self.adrenochrome_integration = AdrenochromeIntegration()
+        self.neurotoxicity_model = AdrenochromeNeurotoxicityModel()
+        self.redox_model = RedoxCyclingModel()
+        self.adrenochrome_history = []
+    
+    def process_with_adrenochrome(self, dna_sequence: str, 
+                                  eeg_data: np.ndarray = None,
+                                  hormone_profile: Dict[str, float] = None) -> Dict[str, Any]:
+        """
+        Complete processing including adrenochrome analysis
+        """
+        # Base processing
+        base_result = self.process_biological_data(dna_sequence, eeg_data, hormone_profile)
+        
+        # Compute adrenochrome from adrenaline
+        hormone_profile = base_result.get('hormone_profile', {})
+        adrenochrome_level = self.adrenochrome_integration.compute_adrenochrome_from_hormones(
+            hormone_profile
+        )
+        
+        # Get redox state from EEG
+        eeg_bands = base_result.get('eeg_bands', {})
+        redox_state = self.adrenochrome_integration.eeg_to_redox_state(eeg_bands)
+        
+        # Compute neurotoxicity
+        glutathione = hormone_profile.get('glutathione', 0.5)
+        toxicity = self.neurotoxicity_model.compute_neurotoxicity_score(
+            adrenochrome_level, glutathione
+        )
+        
+        # Brain state impact
+        brain_impact = self.neurotoxicity_model.brain_state_impact(adrenochrome_level)
+        
+        # Redox cycling
+        mitochondrial_activity = redox_state.get('oxidative_stress', 0.3)
+        redox_cycle = self.redox_model.compute_redox_cycle_activity(
+            adrenochrome_level, mitochondrial_activity
+        )
+        
+        result = {
+            **base_result,
+            'adrenochrome': {
+                'level': adrenochrome_level,
+                'neurotoxicity_score': toxicity,
+                'brain_state_impact': brain_impact,
+                'redox_cycling': redox_cycle,
+                'redox_state': redox_state
+            },
+            'oxidative_stress_marker': redox_state.get('oxidative_stress', 0),
+            'glutathione_estimate': glutathione
+        }
+        
+        self.adrenochrome_history.append({
+            'timestamp': time.time(),
+            'adrenochrome_level': adrenochrome_level,
+            'toxicity': toxicity
+        })
+        
+        return result
